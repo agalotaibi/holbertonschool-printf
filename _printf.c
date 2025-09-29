@@ -7,11 +7,14 @@
 * Return: The number of characters printed.
 */
 
-int _printf(const char *format, ...)
+Int _printf(const char *format, ...)
 {
 va_list args;
 int count = 0;
 int i = 0;
+
+if (format == NULL)
+return (-1);
 
 va_start(args, format);
 
