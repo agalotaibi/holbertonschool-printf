@@ -1,5 +1,6 @@
 #include "main.h"
 #include <stdarg.h>
+#include <unistd.h>
 #include <stdlib.h>
 
 /**
@@ -20,11 +21,17 @@ return (-1);
 
 va_start(args, format);
 
-while (format && format[i] != '\0')
+while (format[i] != '\0')
 {
 if (format[i] == '%')
 {
 i++;
+if (format[i] == '\0')
+{
+va_end(args);
+return (-1);
+}
+
 if (format[i] == 'c')
 {
 char c = va_arg(args, int);
