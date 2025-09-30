@@ -16,7 +16,7 @@ va_list args;
 int count = 0, i = 0;
 char *null_string = "(null)";
 
-if (format == NULL || format[0] == '%' && format[1] == '\0')
+if (format == NULL)
 return (-1);
 
 va_start(args, format);
