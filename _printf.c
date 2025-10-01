@@ -47,15 +47,15 @@ static int _puts(const char *s)
 }
 
 /**
- * handle_percent - Handle %c, %s, %% and unsupported specifiers
- * @sp: Specifier character after '%'
+ * handle_percent - Handle %c, %s, %%, %d, %i and unsupported specifiers
+ * @sp: Specifier after '%'
  * @ap: va_list
  * Return: Printed count, or -1 on error
  */
 static int handle_percent(char sp, va_list ap)
 {
-	char c;
-	char *str;
+	char c, *str;
+	int n;
 
 	if (sp == 'c')
 	{
@@ -67,10 +67,13 @@ static int handle_percent(char sp, va_list ap)
 		str = va_arg(ap, char *);
 		return (_puts(str));
 	}
-	if (sp == '%')
+	if (sp == 'd' || sp == 'i')
 	{
-		return (_putchar('%'));
+		n = va_arg(ap, int);
+		return (print_number(n));
 	}
+	if (sp == '%')
+		return (_putchar('%'));
 
 	/* unsupported: print '%' then the specifier char */
 	if (_putchar('%') == -1 || _putchar(sp) == -1)
@@ -79,7 +82,7 @@ static int handle_percent(char sp, va_list ap)
 }
 
 /**
- * _printf - Produces output according to a format (supports %c, %s, %%)
+ * _printf - Produces output according to a format
  * @format: Format string
  * Return: Number of characters printed, or -1 on error
  */
@@ -106,15 +109,14 @@ int _printf(const char *format, ...)
 			continue;
 		}
 
-		/* skip '%' */
-		format++;
+		format++; /* skip '%' */
 		if (!*format)
 		{
 			count = -1;
 			break;
 		}
 
-		r = handle_percent(*format, ap);
+		r = handle_percent(*format, ap); /* <-- لازم يكون موجود */
 		if (r == -1)
 		{
 			count = -1;
