@@ -74,7 +74,31 @@ static int handle_percent(char sp, va_list ap)
 	}
 	if (sp == '%')
 		return (_putchar('%'));
-
+ if (sp == 'b') 
+    {
+        unsigned int n = va_arg(ap, unsigned int);
+        return (print_unsigned_base(n, 2, 0));
+    }
+    if (sp == 'u') 
+    {
+        unsigned int n = va_arg(ap, unsigned int);
+        return (print_unsigned_base(n, 10, 0));
+    }
+    if (sp == 'o') 
+    {
+        unsigned int n = va_arg(ap, unsigned int);
+        return (print_unsigned_base(n, 8, 0));
+    }
+    if (sp == 'x') 
+    {
+        unsigned int n = va_arg(ap, unsigned int);
+        return (print_unsigned_base(n, 16, 0));
+    }
+    if (sp == 'X') 
+    {
+        unsigned int n = va_arg(ap, unsigned int);
+        return (print_unsigned_base(n, 16, 1));
+    }
 	/* unsupported: print '%' then the specifier char */
 	if (_putchar('%') == -1 || _putchar(sp) == -1)
 		return (-1);
